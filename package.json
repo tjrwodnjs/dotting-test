@@ -10,8 +10,10 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "dotting": "link:../dotting",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
@@ -20,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "link-local-dotting": "npm link dotting && yarn link react && yarn link react-dom && yarn add link:../dotting",
+    "unlink-local-dotting": "yarn remove dotting && yarn unlink dotting && yarn unlink react && yarn unlink react-dom yarn add dotting "
   },
   "eslintConfig": {
     "extends": [
