@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# Dotting Component test with local Dotting library
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a repository for contributors who would like to test [dotting](https://github.com/hunkim98/dotting) locally. This repository was created since testing `dotting` locally has issues due to react and react-dom version mismatch.
 
-## Available Scripts
+This repository has referenced [how-to-test-custom-react-library-locally](https://medium.com/tri-petch-digital/how-to-test-your-custom-react-library-locally-df02595e22f)
 
-In the project directory, you can run:
+## Prerequisites
 
-### `yarn start`
+You must have `dotting` library installed in your local machine. For this test repository to work you should run some scripts in the `dotting` library beforehand. Also, you must have this library cloned in the same directory as this repository.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Your directory structure should look like this
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+/some-directory
+├── dotting
+└── dotting-test
+```
 
-### `yarn test`
+## How to use
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Clone `dotting` library
 
-### `yarn build`
+Go to [dotting](https://github.com/hunkim98/dotting) and clone the `dotting` project. After cloing dotting, freely edit the parts you would like to change.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2. Build the `dotting` library
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Inside the `dotting` directory, run the following command.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+yarn prepublishOnly
+```
 
-### `yarn eject`
+This will compile your typescript files into javascript files that can be used in other projects. **Remember that if you change anything in `dotting` and want to see the effect, you must run this command again!**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 3. Run `link-local` script in `dotting` library
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Inside the `dotting` directory, run the following command.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+yarn link-local
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This will automatically create necessary symbolic links to the `dotting`, `react`, and `react-dom` libraries. Once you have run this command, you do not need to run this command again unless you want to unlink.
 
-## Learn More
+### 4. Clone `dotting-test` library and install dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Clone this repository. After cloning, go to the `dotting-test` directory and run the following command.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+yarn install
+```
+
+### 5. Run `link-local-dotting` script in `dotting-test` library
+
+Inside the `dotting-test` directory, run the following command.
+
+```bash
+yarn link-local-dotting
+```
+
+This will make this repository link to the libraries set in the `dotting` library.
+
+If you see `dotting:link:../dotting` inside your package.json, it means that the linking was successful.
+
+### 6. Run `start` script in `dotting-test` library
+
+Inside the `dotting-test` directory, run the following command.
+
+```bash
+yarn start
+```
+
+Now the `dotting-test` project will open in your localhost!
+
+### 7. Remove links after finishing the test
+
+After you have done editting, you can unlink libraries. Inside the `dotting-test` directory, run the following command.
+
+```bash
+yarn unlink-local-dotting
+```
+
+Inside the `dotting` directory, run the following command.
+
+```bash
+yarn unlink-local
+```
+
+Now you have successfully unlinked the libraries.

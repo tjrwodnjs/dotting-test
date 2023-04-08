@@ -1,21 +1,20 @@
-import React, { useEffect, useRef } from "react";
-import logo from "./logo.svg";
+import { useRef } from "react";
 import "./App.css";
-import { BrushMode, Dotting, DottingRef, useBrush, useDotting } from "dotting";
+import { BrushMode, Dotting, DottingRef, useBrush } from "dotting";
 
 function App() {
   const ref = useRef<DottingRef>(null);
   const { changeBrushMode } = useBrush(ref);
-  const { undo } = useDotting(ref);
+  // const { undo } = useDotting(ref);
 
-  useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.code === "KeyZ" && (e.ctrlKey || e.metaKey)) {
-        console.log("hi");
-        undo();
-      }
-    });
-  }, [undo]);
+  // useEffect(() => {
+  //   document.addEventListener("keydown", (e) => {
+  //     if (e.code === "KeyZ" && (e.ctrlKey || e.metaKey)) {
+  //       console.log("hi");
+  //       undo();
+  //     }
+  //   });
+  // }, [undo]);
   return (
     <div className="App">
       <header className="App-header">
