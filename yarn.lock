@@ -3806,10 +3806,10 @@ dotenv@^10.0.0:
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz"
   integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
-dotting@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/dotting/-/dotting-1.0.8.tgz#b36351bd0af5c9c8e8aa8f033d26ea876f533193"
-  integrity sha512-Ks5oUvtwz5PFqViqQ2x29f/Z35ES2CQoTlOeRE3UG8/phlGBuz3ehMXICIOhS8xtJb5YR4tCZ4Pwdz5qVJ7YRw==
+dotting@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dotting/-/dotting-2.0.2.tgz#64e1a1bf5be1fc335720c4540ee1aff44db86329"
+  integrity sha512-+QBaVPiIC0KIU+P/NMQ3CJA2H5qH/km0fMlQQfdf5dMS9aHa7ThzZRbXPQPRDPwC9fxmYfheh/mtsuMujEawnQ==
 
 duplexer@^0.1.2:
   version "0.1.2"
