@@ -3,6 +3,7 @@ import {
   CanvasHoverPixelChangeHandler,
   Dotting,
   DottingRef,
+  PixelModifyItem,
   useBrush,
   useData,
   useDotting,
@@ -51,10 +52,36 @@ function App() {
       // URL2: http://localhost:6005/?path=/story/hooks-usegrids--page
       // Do not modify any parts other than the below.
       // Modifiy ⬇️
+      const dy = [1, 1, -1, -1];
+      const dx = [1, -1, 1, -1];
+      const f = (x: number, y: number, d: number) => {
+        x += dx[d];
+        y += dy[d];
+        if (
+          !(
+            indices.leftColumnIndex <= x &&
+            x <= indices.rightColumnIndex &&
+            indices.topRowIndex <= y &&
+            y <= indices.bottomRowIndex
+          )
+        )
+          return;
+
+        colorPixels([
+          {
+            rowIndex: y,
+            columnIndex: x,
+            color: "red",
+          },
+        ]);
+
+        f(x, y, d);
+      };
+
       if (hoveredPixel) {
-        console.log(
-          `You clicked on rowIndex: ${hoveredPixel.rowIndex}, columnIndex: ${hoveredPixel.columnIndex}`
-        );
+        for (let k = 0; k < 4; k++) {
+          f(hoveredPixel.columnIndex, hoveredPixel.rowIndex, k);
+        }
       }
       // Modify ⬆️
     };
