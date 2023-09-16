@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   CanvasHoverPixelChangeHandler,
   Dotting,
@@ -11,10 +11,13 @@ import {
   useHandlers,
 } from "dotting";
 
+import { shape_I, shape_L, shape_T } from "./Font/Test";
 function App() {
   const ref = useRef<DottingRef>(null);
-  const { colorPixels } = useDotting(ref);
+  const { colorPixels, setData } = useDotting(ref);
   const { indices, dimensions } = useGrids(ref);
+  const { dataArray } = useData(ref);
+
   const {
     addHoverPixelChangeListener,
     removeHoverPixelChangeListener,
@@ -25,6 +28,20 @@ function App() {
     rowIndex: number;
     columnIndex: number;
   } | null>(null);
+
+  const CreateEmptySquareData = (
+    size: number
+  ): Array<Array<PixelModifyItem>> => {
+    const data: Array<Array<PixelModifyItem>> = [];
+    for (let i = 0; i < size; i++) {
+      const row: Array<PixelModifyItem> = [];
+      for (let j = 0; j < size; j++) {
+        row.push({ rowIndex: i, columnIndex: j, color: "" });
+      }
+      data.push(row);
+    }
+    return data;
+  };
 
   useEffect(() => {
     const hoverPixelChangeListener: CanvasHoverPixelChangeHandler = (pixel) => {
@@ -52,37 +69,6 @@ function App() {
       // URL2: http://localhost:6005/?path=/story/hooks-usegrids--page
       // Do not modify any parts other than the below.
       // Modifiy ⬇️
-      const dy = [1, 1, -1, -1];
-      const dx = [1, -1, 1, -1];
-      const f = (x: number, y: number, d: number) => {
-        x += dx[d];
-        y += dy[d];
-        if (
-          !(
-            indices.leftColumnIndex <= x &&
-            x <= indices.rightColumnIndex &&
-            indices.topRowIndex <= y &&
-            y <= indices.bottomRowIndex
-          )
-        )
-          return;
-
-        colorPixels([
-          {
-            rowIndex: y,
-            columnIndex: x,
-            color: "red",
-          },
-        ]);
-
-        f(x, y, d);
-      };
-
-      if (hoveredPixel) {
-        for (let k = 0; k < 4; k++) {
-          f(hoveredPixel.columnIndex, hoveredPixel.rowIndex, k);
-        }
-      }
       // Modify ⬆️
     };
     addCanvasElementEventListener("mousedown", onCanvasClickListener);
@@ -97,6 +83,23 @@ function App() {
     colorPixels,
     dimensions,
   ]);
+
+  const handleKeyPress = useCallback((event: any) => {
+    console.log(`Key pressed: ${event.key}`);
+    if (event.key == "i" || event.key == "I") setData(shape_I);
+    if (event.key == "l" || event.key == "L") setData(shape_L);
+    if (event.key == "t" || event.key == "T") setData(shape_T);
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener("keydown", handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <div
@@ -124,7 +127,28 @@ function App() {
           {hoveredPixel.columnIndex}
         </div>
       )}
-      <Dotting width={500} height={500} ref={ref} />
+      <Dotting
+        width={1000}
+        height={800}
+        ref={ref}
+        initLayers={[{ id: "layer1", data: CreateEmptySquareData(28) }]}
+      />
+      <div>
+        <button
+          onClick={() => {
+            setData(CreateEmptySquareData(28));
+          }}
+        >
+          CLEAR
+        </button>
+        <button
+          onClick={() => {
+            console.log(dataArray);
+          }}
+        >
+          PRINT
+        </button>
+      </div>
     </div>
   );
 }
